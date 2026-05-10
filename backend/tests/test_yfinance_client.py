@@ -19,8 +19,8 @@ def _make_hist(prices: list[float]) -> pd.DataFrame:
 
 @pytest.fixture(autouse=True)
 def _reset_cache():
-    from backend.app.services.cache import cache
     from backend.app.services import circuit_breaker
+    from backend.app.services.cache import cache
     cache.clear()
     # Reset all circuit breakers so previous test failures don't block calls
     for cb in circuit_breaker._breakers.values():

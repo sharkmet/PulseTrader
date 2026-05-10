@@ -70,6 +70,7 @@ def trigger_refresh() -> dict:
     Runs in the background — returns immediately, refresh takes ~30-60 seconds.
     """
     import threading
+
     from backend.app.scheduler import _refresh_watchlist
     thread = threading.Thread(target=_refresh_watchlist, daemon=True, name="manual-refresh")
     thread.start()

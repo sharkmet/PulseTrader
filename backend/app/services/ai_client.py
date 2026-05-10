@@ -223,18 +223,17 @@ def generate_analysis(
         parsed = _parse_json(text)
 
         # Parse optional price target
+        import contextlib
         pt_raw = parsed.get("price_target")
         price_target: AiPriceTarget | None = None
         if isinstance(pt_raw, dict):
-            try:
+            with contextlib.suppress(KeyError, ValueError, TypeError):
                 price_target = AiPriceTarget(
                     low=float(pt_raw["low"]),
                     mid=float(pt_raw["mid"]),
                     high=float(pt_raw["high"]),
                     horizon=str(pt_raw.get("horizon", "12M")),
                 )
-            except (KeyError, ValueError, TypeError):
-                pass
 
         return AiAnalysis(
             ticker=ticker,

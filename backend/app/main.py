@@ -150,8 +150,9 @@ async def _lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     logger.info("Database initialized")
     _seed_watchlist()
     _seed_alerts()
-    from backend.app.scheduler import start_scheduler, _refresh_watchlist
     import threading
+
+    from backend.app.scheduler import _refresh_watchlist, start_scheduler
     # Warm the watchlist immediately in the background (don't block startup)
     threading.Thread(target=_refresh_watchlist, daemon=True, name="startup-refresh").start()
     start_scheduler()
@@ -195,7 +196,17 @@ def create_app() -> FastAPI:
     )
 
     # Register specific routes before the catch-all /{ticker} snapshot route
-    from backend.app.api import ai, alerts, assets, backtest, interpret, market, news, score, watchlist
+    from backend.app.api import (
+        ai,
+        alerts,
+        assets,
+        backtest,
+        interpret,
+        market,
+        news,
+        score,
+        watchlist,
+    )
     app.include_router(assets.router)
     app.include_router(assets.macro_router)
     app.include_router(watchlist.router)

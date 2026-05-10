@@ -1,8 +1,6 @@
 """Tests for the TTL in-memory cache."""
 from __future__ import annotations
 
-import time
-
 from backend.app.services.cache import TTLCache
 
 
