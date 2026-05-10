@@ -1,0 +1,56 @@
+# ── Secrets — NEVER commit these ──────────────────────────────────────────────
+backend/.env
+frontend/.env.local
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+.eggs/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# ── Test / lint artifacts ──────────────────────────────────────────────────────
+.pytest_cache/
+.hypothesis/
+.ruff_cache/
+.mypy_cache/
+.coverage
+coverage.json
+coverage.xml
+htmlcov/
+
+# ── Runtime data (generated, not source) ──────────────────────────────────────
+backend/*.db
+backend/data/
+backend/logs/
+
+# ── Node / Next.js ────────────────────────────────────────────────────────────
+node_modules/
+.next/
+frontend/out/
+frontend/.env.local
+next-env.d.ts
+
+# ── OS ────────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.code-workspace
+
+# ── Claude Code internal ──────────────────────────────────────────────────────
+.claude/
+
+# ── Design handoff (binary, not source) ───────────────────────────────────────
+*.zip

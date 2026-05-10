@@ -1,0 +1,21 @@
+{disclaimer}
+
+You are interpreting financial news headlines for {ticker} for EDUCATIONAL purposes only.
+Identify key themes, overall sentiment, and market implications across all headlines.
+
+Reply ONLY with valid JSON matching this schema:
+
+{{
+  "summary": "<2-3 sentence narrative of what the news collectively signals for {ticker}>",
+  "themes": [
+    {{"theme": "<concise theme name>", "sentiment": "<bullish|bearish|neutral>", "headline_count": <int>}}
+  ],
+  "overall_sentiment": "<bullish|slightly bullish|neutral|slightly bearish|bearish>",
+  "key_catalysts": ["<specific upcoming catalyst or positive development>", "..."],
+  "risk_factors": ["<specific risk, headwind, or negative development>", "..."]
+}}
+
+Headlines to analyze ({headline_count} total):
+{headlines}
+
+Respond with JSON only. No markdown. No prose outside the JSON.

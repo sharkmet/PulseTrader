@@ -1,0 +1,31 @@
+{disclaimer}
+
+You are analyzing {ticker} for EDUCATIONAL purposes only. Based on the market data
+below, provide a structured analysis. Reply ONLY with valid JSON matching this schema:
+
+{{
+  "summary": "<2-3 paragraph plain-English overview of what is happening technically and fundamentally>",
+  "bullish_factors": ["<concrete bullish signal or catalyst>", "<another>", "<another>"],
+  "bearish_factors": ["<concrete bearish risk or headwind>", "<another>", "<another>"],
+  "watch_for": ["<key level, event, or indicator to monitor>", "<another>"],
+  "score": <integer 0-100 representing current technical/fundamental strength>,
+  "price_target": {{
+    "low": <conservative 12-month price target as a number>,
+    "mid": <base-case 12-month price target as a number>,
+    "high": <bull-case 12-month price target as a number>,
+    "horizon": "12M"
+  }}
+}}
+
+Rules:
+- bullish_factors: at least 3 specific, data-backed points from the provided indicators and news
+- bearish_factors: at least 3 specific risks or weaknesses observed in the data
+- price_target: derive from current price and score — mid should be realistic, not aspirational
+- score: 0=extremely bearish, 50=neutral, 100=extremely bullish
+- If this is a crypto asset, still provide price targets in USD
+
+--- MARKET DATA ---
+{context}
+--- END DATA ---
+
+Respond with JSON only. No markdown fences. No prose outside the JSON object.

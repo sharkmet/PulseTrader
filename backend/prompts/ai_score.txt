@@ -1,0 +1,8 @@
+{disclaimer}
+
+Based on the brief technical summary of {ticker} below, rate the asset's current
+technical strength from 0 (extremely weak/bearish) to 100 (extremely strong/bullish).
+
+Reply with ONLY a single integer between 0 and 100. No explanation. No other text.
+
+{context}

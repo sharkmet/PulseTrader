@@ -1,0 +1,45 @@
+# PulseTrader Scoring Formula — v2.0.0
+#
+# Edit this file to retune the formula. No code changes needed.
+# All weights in [weights] must sum to 1.0.
+# All weights in each [sub_weights.*] block must sum to 1.0.
+#
+# Run tests after any edit: pytest tests/test_pulse_score.py
+
+[meta]
+version = "2.0.0"
+description = "7-component decomposition: trend, momentum, volatility, volume, sentiment, mtf, ai"
+
+# ── Top-level component weights ───────────────────────────────────────────────
+# Sum must equal 1.0
+
+[weights]
+trend          = 0.25   # MA alignment, MACD, Ichimoku
+momentum       = 0.20   # RSI, Stochastic, Williams %R, price returns
+volatility     = 0.10   # Bollinger %B, Keltner position
+volume         = 0.10   # Volume ratio, MFI
+sentiment      = 0.15   # News sentiment (source-weighted)
+multi_timeframe = 0.10  # Cross-timeframe agreement score
+ai             = 0.10   # Claude qualitative overlay
+
+# ── Sub-weights within each component ─────────────────────────────────────────
+# Each block must sum to 1.0
+
+[sub_weights.trend]
+ma_alignment = 0.40     # fraction of key MAs below price
+macd         = 0.35     # MACD histogram signal
+ichimoku     = 0.25     # Tenkan/Kijun position (if available)
+
+[sub_weights.momentum]
+rsi          = 0.35
+stochastic   = 0.25
+williams_r   = 0.15
+price_return = 0.25     # tanh-sigmoid of 1d/5d/20d returns
+
+[sub_weights.volatility]
+bb_percent_b  = 0.60
+keltner_pos   = 0.40
+
+[sub_weights.volume]
+volume_ratio = 0.50
+mfi          = 0.50     # Money Flow Index (falls back to volume_ratio if unavailable)

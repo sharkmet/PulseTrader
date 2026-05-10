@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./data/pulsetrader.db
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - COINGECKO_DEMO_KEY=${COINGECKO_DEMO_KEY:-}
+      - CORS_ORIGINS=http://localhost:3000
+      - DEBUG=false
+    volumes:
+      - ./backend/data:/app/data
+      - ./backend/logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
