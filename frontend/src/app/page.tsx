@@ -143,7 +143,7 @@ function StatusBar({ time, watchlist, alerts, onOpenAdd, addOpen, onHome }: {
 
   return (
     <div style={{ height: 30, display: "flex", alignItems: "center", borderBottom: "1px solid var(--border)", background: "var(--bg)", padding: "0 12px", fontSize: 11, gap: 14 }}>
-      <button onClick={onHome} style={{ display: "flex", alignItems: "center", gap: 10, paddingRight: 18, borderRight: "1px solid var(--border)", height: "100%", background: "transparent", border: "none", borderRight: "1px solid var(--border)", cursor: "pointer" }}>
+      <button onClick={onHome} style={{ display: "flex", alignItems: "center", gap: 10, paddingRight: 18, borderRight: "1px solid var(--border)", height: "100%", background: "transparent", border: "none", cursor: "pointer" }}>
         <svg width="15" height="15" viewBox="0 0 14 14">
           <path d="M0 7 L3 7 L4 2 L6 12 L8 4 L10 9 L14 9" stroke="var(--accent)" strokeWidth="1.4" fill="none" strokeLinejoin="round" strokeLinecap="round" />
         </svg>
