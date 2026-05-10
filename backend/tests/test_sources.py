@@ -119,12 +119,17 @@ class TestFred:
         mock_client.get.return_value = mock_resp
         return mock_client
 
-    def test_fetch_snapshot_returns_empty_without_key(self):
+    def test_fetch_snapshot_returns_data_without_key(self):
+        """Without a FRED key, snapshot falls back to yfinance proxies — returns a dict, not empty."""
         from backend.app.services.sources.fred import fetch_snapshot
-        with patch("backend.app.services.sources.fred.get_settings") as mock_cfg:
+        with (
+            patch("backend.app.services.sources.fred.get_settings") as mock_cfg,
+            patch("backend.app.services.sources.fred._yfinance_macro_fallback", return_value={"vix": 18.5, "fetched_at": "now"}),
+        ):
             mock_cfg.return_value.has_fred_key = False
             result = fetch_snapshot()
-        assert result == {}
+        assert isinstance(result, dict)
+        assert result.get("vix") == 18.5
 
     def test_fetch_snapshot_returns_dict_with_key(self):
         from backend.app.services.sources.fred import fetch_snapshot

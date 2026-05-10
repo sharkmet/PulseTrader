@@ -188,20 +188,22 @@ def test_macro_context(client):
 # ── /watchlist ────────────────────────────────────────────────────────────────
 
 def test_watchlist_crud(client):
+    # Use a ticker that won't conflict with the default seed list
+    TEST_TICKER = "TESTXYZ"
     # Add
-    r = client.post("/watchlist/", json={"ticker": "MSFT", "name": "Microsoft", "asset_type": "stock"})
+    r = client.post("/watchlist/", json={"ticker": TEST_TICKER, "name": "Test Corp", "asset_type": "stock"})
     assert r.status_code == 201
     # List
     r = client.get("/watchlist/")
     assert r.status_code == 200
     tickers = [item["ticker"] for item in r.json()]
-    assert "MSFT" in tickers
+    assert TEST_TICKER in tickers
     # Delete
-    r = client.delete("/watchlist/MSFT")
+    r = client.delete(f"/watchlist/{TEST_TICKER}")
     assert r.status_code == 204
     # Confirm deleted
     r = client.get("/watchlist/")
-    assert "MSFT" not in [item["ticker"] for item in r.json()]
+    assert TEST_TICKER not in [item["ticker"] for item in r.json()]
 
 
 def test_watchlist_duplicate_returns_409(client):

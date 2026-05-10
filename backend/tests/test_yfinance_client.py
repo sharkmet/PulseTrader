@@ -20,9 +20,23 @@ def _make_hist(prices: list[float]) -> pd.DataFrame:
 @pytest.fixture(autouse=True)
 def _reset_cache():
     from backend.app.services.cache import cache
+    from backend.app.services import circuit_breaker
     cache.clear()
+    # Reset all circuit breakers so previous test failures don't block calls
+    for cb in circuit_breaker._breakers.values():
+        cb.reset()
     yield
     cache.clear()
+
+
+@pytest.fixture(autouse=True)
+def _mock_infra():
+    """Patch rate limiter and observability so they don't interfere."""
+    with (
+        patch("backend.app.services.yfinance_client.rate_limiter.acquire"),
+        patch("backend.app.services.yfinance_client.observe"),
+    ):
+        yield
 
 
 # ── fetch_ohlcv ───────────────────────────────────────────────────────────────
